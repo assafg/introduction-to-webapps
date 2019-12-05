@@ -1,8 +1,4 @@
-# Introduction to WebApps
 
-#### WebApps in 2020
-
-----
 
 # Client-Server concepts
 
