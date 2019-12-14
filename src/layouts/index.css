@@ -234,3 +234,8 @@ sidebyside {
 sidebyside > div {
     text-align: left;
 }
+
+sidebyside > pre {
+    max-width: 48vw;
+    margin-right: 1rem;
+}

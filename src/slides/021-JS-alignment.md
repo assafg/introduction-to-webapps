@@ -193,24 +193,153 @@ console.log(newFunction());
 ```
 ---
 
-
 ## Closures
+
+```javascript
+function updateApi(key, url) {
+    return function(data) {
+        fetch(`${url}/update?key=${key}`, data);
+    }
+}
+const update = updateApi('123');
+
+//...
+
+update('data to update');
+
+```
 
 ---
 
 ## Async operations, event loop, callbacks
 
+```javascript
+function callback(error, data) {
+    // do something when an operation is competed
+    // An "error first" is a common convention
+
+}
+const timeout = setTimeout(function() {
+    // do something later
+
+    callback(...);
+}, 1000);
+
+fetch('http://example.com/someuri/', function(resopose){
+    console.log(response.json());
+});
+```
+
 ---
 
 ## Arrow functions
+
+<sidebyside>
+
+```javascript
+
+function foo() {
+    // new scope context
+}
+
+const bar = function() {
+    // inner scope context
+}
+
+```
+
+```javascript
+
+const foo = () => {
+    // uses parent context (`this`)
+}
+
+const bar = () => {
+    // uses parent context (`this`)
+}
+
+```
+
+</sidebyside>
 
 ---
 
 ## Promises
 
+<sidebyside>
+
+```javascript
+
+fetch('http://example.com/someuri/', (response) => {
+    // this callback function is called eventually
+})
+
+```
+
+```javascript
+
+fetch('http://example.com/someuri/').
+    then((response) => {
+    // this callback function is called eventually
+        return '42'
+    }).then(value => {
+        console.log(value); // Prints 42
+    }).catch(err => {
+        console.log(err); // will print it an error occurs
+    })
+
+```
+
+</sidebyside>
+
+---
+
+## Creaing a promise
+
+```javascript
+const prom = new Promise((resolve, reject) => {
+    // do stuff...
+
+    if (success) {
+        // on success
+        resolve(value); // Value is passed to the first `then`
+    } else {
+        // on failure - pass and error to the `catch`
+        reject(new Error());
+    }
+});
+```
+
 ---
 
 ## async/await
+
+<sidebyside>
+
+```javascript
+function fetchData() {
+    fetch('http://example.com/someuri/').
+    then((response) => {
+        // this callback function is called eventually
+    }).catch(err => {
+        console.log(err); // will print it an error occurs
+    })
+}
+
+```
+
+```javascript
+async function fetchData() {
+    try{
+        const response = await fetch('http://example.com/';
+        // this section will run only after response has a value
+    }catch(err) {
+        console.log(err)
+    }
+}
+```
+
+<sidebyside>
 
 ---
 
