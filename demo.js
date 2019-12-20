@@ -1,15 +1,16 @@
-const car = {
-  range: 620,
-  fuleSpent: 20,
-};
-
-function calculateFuleConsumption() {
-  console.log(this);
-  return this.range / this.fuleSpent;
+function Car() {
+  this.speed = 100;
+  this.drive = function() {
+    console.log('speed:', this.speed);
+  };
 }
 
-const newFunction = calculateFuleConsumption.bind(car); // Bound function
-console.log(newFunction());
+const car = new Car();
 
-car.fuleSpent = 40;
-console.log(newFunction());
+const params = {
+  speed: 120,
+};
+
+car.drive();
+
+car.drive.call(params);

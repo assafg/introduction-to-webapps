@@ -3,35 +3,6 @@
 
 ----
 
-## Server Side Rendering
-
-1. Browser asks for resource
-2. Server prepares response based on URI and user data (session)
-3. Server returns static content for the browser to render
-
----
-
-## Server Side Rendering Flow
-
-![Server Side Rendering](./resources/ssr-sequence.png)
-
----
-
-## Single Page Application
-
-1. Browser asks for application files (shell)
-2. Browser renders content
-3. Application requests data from the server and re-renders accordingly
-4. Interactions with the app can be delegated to the server or remain local
-
----
-
-## Single Page Application Sequence
-
-![SPA](./resources/singel-page-app.png)
-
---- 
-
 # HTTP
 
 #### HyperText Transfer Protocol
@@ -113,6 +84,49 @@ Example usage: Session Cookie
 2. The client attaches the cookie to every subsequent request so the server can "identify" the individual requests as a single session. 
 
 ---
+
+## Client Side Storage
+
+- localStorage
+- sessionStorage
+
+```javascript
+localStorage.setItem('my-key', JSON.stringify(myValue));
+
+var myValue = JSON.parse(localStorage.getItem('my-key');
+
+```
+
+---
+
+## Server Side Rendering
+
+1. Browser asks for resource
+2. Server prepares response based on URI and user data (session)
+3. Server returns static content for the browser to render
+
+---
+
+## Server Side Rendering Flow
+
+![Server Side Rendering](./ssr-sequence.png)
+
+---
+
+## Single Page Application
+
+1. Browser asks for application files (shell)
+2. Browser renders content
+3. Application requests data from the server and re-renders accordingly
+4. Interactions with the app can be delegated to the server or remain local
+
+---
+
+## Single Page Application Sequence
+
+![SPA](./singel-page-app.png)
+
+--- 
 
 # REST
 

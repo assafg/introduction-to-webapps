@@ -103,34 +103,15 @@ JS attaches to every function an execution context - the scope in which the func
 
 ```javascript
 function Car() {
-    function accelerate(){
-        //...
-    }
-
-    function stop() {
-        //...
-    }
-
-    function turn(direction) {
-        //...
-    }
-
-    function drive(){
-        this.accelerate();
-        this.turn('left');
-        this.stop();
-    }
-
-    drive();
-
-    this.drive();
+  this.speed = 100;
+  this.drive = function() {
+    console.log('speed:', this.speed);
+  };
 }
 
-Car();
+const car = new Car();
 
-function drive() {
-    console.log('This should not happen');
-}
+car.drive();
 
 ```
 
@@ -155,17 +136,19 @@ const fc = calculateFuleConsumption(); // ?
 ## function `call`
 
 ```javascript
+
 const car = {
   range: 620,
   fuleSpent: 20,
 };
 
 function calculateFuleConsumption() {
-  console.log(this);
   return this.range / this.fuleSpent;
 }
- 
-console.log(calculateFuleConsumption.call(car));// Call adds context
+const a = calculateFuleConsumption();
+const b = calculateFuleConsumption.call(car); // Call adds context
+console.log(a);
+console.log(b);
 
 ```
 ---
@@ -179,15 +162,17 @@ const car = {
 };
 
 function calculateFuleConsumption() {
-  console.log(this);
   return this.range / this.fuleSpent;
 }
 
 const newFunction = calculateFuleConsumption.bind(car); // Bound function
-console.log(newFunction());
+
+const a = newFunction();
+console.log(a);
 
 car.fuleSpent = 40;
-console.log(newFunction());
+const b = newFunction();
+console.log(b);
 
 
 ```
@@ -339,47 +324,260 @@ async function fetchData() {
 }
 ```
 
-<sidebyside>
+</sidebyside>
 
 ---
 
 ## Variable destructuring assignment {...a}, [...arr], (, ...others)
 
+<sidebyside>
+
+```javascript
+
+const data = {
+    age: 30,
+    name: 'John'
+}
+
+// ...
+
+const age = data.age;
+const name = data.name.
+
+```
+
+```javascript
+
+const data = {
+    age: 30,
+    name: 'John'
+}
+
+// ...
+
+const { age, name };
+
+```
+</sidebyside>
+
+---
+<sidebyside>
+
+```javascript
+
+const data = {
+    age: 30,
+    name: 'John'
+}
+
+function foo({ age }) {
+    console.log('age', age);   
+}
+
+foo(data);
+
+```
+
+```javascript
+
+const values = [1, 2, 3];
+
+const [a, b] = values;
+console.log('a', a); // 1
+console.log('b', b); // 2
+
+const otherValues = [5, 6];
+
+const all = [...values, otherValues];
+
+console.log('all', all); // [1, 2, 3, 4, 5]
+
+```
+</sidebyside>
+
 ---
 
-## Shallow and deep comparison (===, _.equals)
+## Shallow and deep comparison (===, _.isEqual)
+
+```javascript
+42 == '42' // true
+42 === '42' // false
+
+//-------------------
+
+const a = { x: 1 };
+const b = { x: 1 };
+
+a == b // false
+a === b //false
+
+_.isEqual(a, b) // true
+
+JSON.stringify(a) === JSON.stringify(b) // true 
+
+const x = {a: 1, b: 2};
+const y = {b: 2, a: 1};
+
+JSON.stringify(x) === JSON.stringify(y) // false
+
+
+```
+
 ---
 
 ## ES Modules
+Modules are supported in Chrome, Safari, Edge and Firefox (since version 60)
+
+<sidebyside>
+
+```javascript
+// everything.js
+const answer = 42
+
+function question() {
+    return answer;
+}
+
+export question;
+export default answer;
+
+// CommonJS
+exports.question = question;
+exports.default = answer;
+
+```
+
+
+```javascript
+import answer, { question } from './everything.js'
+
+// CommonJS
+const answer = require('./everything.js').default
+const { question } = require('./everything.js')
+```
+</sidebyside>
 
 ---
 
-## Export (default)
+# Functional programming
 
 ---
 
-## Import
+## Pure functions
+
+- Accept parameters, return values
+- Consistent
+- No side effects
 
 ---
 
-## Constructor function
+## Chainig functions
+
+The result of each function is the input for the next
+
+```
+y = f(x)
+z = g(y)
+
+==
+
+z = g(f(x))
+
+```
+
+Functions that support this pattern can be `composed` to create complex functionality
+
+---
+## Currying
+
+Composition requires each function to have a single input parameter.
+
+How can we compose a fuction with more?
+
+```javascript
+
+function add(a, b) {
+    return a + b;
+}
+
+```
+---
+
+## Currying
+
+```javascript
+
+function add(a) {
+    return function(b) {
+        return a + b;
+    }
+}
+
+add(5)(3) = 8
+
+```
 
 ---
 
-## Functional programming and array operations
+# Array operations
 
 ---
-
 ## map
+
+<sidebyside>
+
+```javascript
+const source = [...];
+const dest = [];
+
+for(let i=0; i<source.length; i++) {
+    const newObj = {...source[i]};
+    // change newObj if required
+    dest.push(newObj)
+}
+
+```
+
+```javascript
+const source = [...];
+const dest = source.map(item => {
+    const newObj = {...item};
+    // change newObj if required
+    return newObj;
+});
+
+```
+
+</sidebyside>
 
 ---
 
 ## filter
 
+
+```javascript
+const source = [1, 2, 3, 4, 5];
+const dest = source.filter(item => item % 2 === 0);
+
+console.log(dest); // [2, 4]
+
+```
+
 ---
 
 ## reduce
 
+```javascript
+
+const source = [1, 2, 3, 4, 5];
+
+const sum = source.reduce((aggregation, current, index) => {
+    return aggregation + current;
+}, 0);
+
+console.log(sum); // 15
+
+```
 ---
 
 ## find
