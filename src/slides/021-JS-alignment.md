@@ -420,7 +420,6 @@ const y = {b: 2, a: 1};
 
 JSON.stringify(x) === JSON.stringify(y) // false
 
-
 ```
 
 ---
@@ -582,12 +581,138 @@ console.log(sum); // 15
 
 ## find
 
+```javascript
+
+const source = [
+    { id: 1, name: 'John' },
+    { id: 2, name: 'Bob' },
+    { id: 3, name: 'Mike' },
+    { id: 4, name: 'John' },
+];
+
+const person = source.find(el => el.name === 'John');
+
+console.log(person); // { id: 1, name: 'John' }
+
+```
+
 ---
 
 ## every
+
+```javascript
+
+const source = [
+    { name: 'John', age: 27 },
+    { name: 'Bob', age: 30 },
+    { name: 'Mike', age: 40 },
+    { name: 'John', age: 29 },
+];
+
+const over18 = source.every(el => el.age >= 18);
+console.log(over18); // true
+
+const over30 = source.every(el => el.age >= 30);
+console.log(over30); // false
+
+```
 
 ---
 
 ## some
 
+```javascript
 
+const source = [
+    { name: 'John', age: 27 },
+    { name: 'Bob', age: 30 },
+    { name: 'Mike', age: 40 },
+    { name: 'John', age: 29 },
+];
+
+const over30 = source.some(el => el.age >= 30);
+console.log(over30); // true
+
+const over50 = source.some(el => el.age >= 50);
+console.log(over50); // false
+
+```
+
+---
+
+# Template literals
+
+```javascript
+
+const firstName = 'John';
+const lastName = 'John';
+
+const strOld = firstName + ' ' +lastName;
+const strNew = `${firstName} ${lastName}`;
+
+const oldParagraph = 'line 1\nline 2\nline 3'
+const newParagraph = `line 1
+line 2
+line 3`;
+
+
+```
+
+---
+
+## Class
+
+```javascript
+class Animal {
+  constructor(age, name) {
+    this.age = age;
+    this.name = name;
+  }
+}
+
+class Dog extends Animal {
+  constructor(age, name) {
+    super(age, name);
+  }
+
+  bark() {
+    console.log(`ruf ruf ${this.name} ruf ${this.age}`);
+  }
+}
+
+const snoopy = new Dog(3, 'Snoopy');
+snoopy.bark();
+```
+
+---
+
+## Fetch
+
+```javascript
+const response = await fetch('http://api.tvmaze.com/search/shows?q=american');
+const myJson = await response.json();
+console.log(myJson);
+```
+---
+
+# Lab
+
+---
+Create an API class for fetching shows data from a server 
+
+(e.g `http://api.tvmaze.com/search/shows?q=american`)
+
+```
+1. The data should be transformed to 
+
+[{
+    id: ''
+    title: '',
+    description: '',
+    score: x
+}]
+
+2. Cache the results
+
+3. Debounce the requests
+```

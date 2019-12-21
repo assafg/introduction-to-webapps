@@ -1,16 +1,19 @@
-function Car() {
-  this.speed = 100;
-  this.drive = function() {
-    console.log('speed:', this.speed);
-  };
+class Animal {
+  constructor(age, name) {
+    this.age = age;
+    this.name = name;
+  }
 }
 
-const car = new Car();
+class Dog extends Animal {
+  constructor(age, name) {
+    super(age, name);
+  }
 
-const params = {
-  speed: 120,
-};
+  bark() {
+    console.log(`ruf ruf ${this.name} ruf ${this.age}`);
+  }
+}
 
-car.drive();
-
-car.drive.call(params);
+const snoopy = new Dog(3, 'Snoopy');
+snoopy.bark();
